@@ -187,14 +187,24 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
     ***place the link to the modified file and inserted terraform code***
-    
-    3. Add support for preemptible/spot instances in a Dataproc cluster
+
+    DONE: Commit: [3625130](https://github.com/karolstepanienko/tbd-workshop-1/commit/3625130dda5f053f1125383b58add1c06f22c984)
+
+    2. Add support for preemptible/spot instances in a Dataproc cluster
 
     ***place the link to the modified file and inserted terraform code***
-    
+
+    DONE: Commit: [fc53da8](https://github.com/karolstepanienko/tbd-workshop-1/commit/fc53da86bf7b9b60d568737caa05a677312e6f1b)
+
+    Source: [terraform docs: preemptible_worker_config](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/dataproc_cluster#nested_preemptible_worker_config)
+
     3. Perform additional hardening of Jupyterlab environment, i.e. disable sudo access and enable secure boot
-    
+
     ***place the link to the modified file and inserted terraform code***
+
+    DONE: Commit: [37eb083](https://github.com/karolstepanienko/tbd-workshop-1/commit/37eb08336eec5826e87da04a0aac0a0fa41f4982)
+
+    Source [terraform docs: shielded_instance_config](https://registry.terraform.io/providers/hashicorp/google/5.44.2/docs/resources/notebooks_instance#shielded_instance_config-3)
 
     4. (Optional) Get access to Apache Spark WebUI
 
