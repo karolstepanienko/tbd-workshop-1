@@ -122,11 +122,11 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 11. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
-create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml) 
+create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml)     
 
-   ***place the expected consumption you entered here***
+    [File](https://github.com/karolstepanienko/tbd-workshop-1/blob/master/infracost-usage.yml)
 
-   ***place the screenshot from infracost output here***
+    ![img.png](doc/figures/phase1/infracost.png)
 
 11. Create a BigQuery dataset and an external table using SQL
 
