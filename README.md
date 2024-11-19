@@ -35,6 +35,10 @@ DONE:
 gcloud auth application-default revoke
 # login and get the new application credentials
 gcloud auth application-default login
+
+# for terraform plan to work locally also fully login to gcloud
+gcloud auth revoke
+gcloud auth login
 ```
 ## Project setup
 0. Fork this repository to your own Github account.

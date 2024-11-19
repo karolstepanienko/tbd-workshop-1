@@ -124,7 +124,11 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
 create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml)     
 
-    [File](https://github.com/karolstepanienko/tbd-workshop-1/blob/master/infracost-usage.yml)
+    DONE:
+
+    [infracost-usage.yml](https://github.com/karolstepanienko/tbd-workshop-1/blob/master/infracost-usage.yml)
+
+    [infracost comment in PR](https://github.com/karolstepanienko/tbd-workshop-1/pull/8#issuecomment-2484205298)
 
     ![img.png](doc/figures/phase1/infracost.png)
 
@@ -166,7 +170,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     Output:
     ![img.png](doc/figures/phase1/BQ-table-csv.png)
 
-    Data loaded to the table: [example-data.csv](example-data.csv)
+    Data loaded to the table: [example-data.csv](https://github.com/karolstepanienko/tbd-workshop-1/blob/master/example-data.csv)
 
     ***why does ORC not require a table schema?***
 
