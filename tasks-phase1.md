@@ -4,179 +4,187 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 1. Authors:
 
-   **_enter your group nr_**
+    ***enter your group nr***
 
-   DONE:
-   Team 4
+    DONE:
+    Team 4
 
-   **_link to forked repo_**
+    ***link to forked repo***
 
-   DONE:
-   [https://github.com/karolstepanienko/tbd-workshop-1](https://github.com/karolstepanienko/tbd-workshop-1)
+    DONE:
+    [https://github.com/karolstepanienko/tbd-workshop-1](https://github.com/karolstepanienko/tbd-workshop-1)
 
 2. Follow all steps in README.md.
 
-   DONE: screenshots in [README.md](README.md)
+    DONE: screenshots in [README.md](README.md)
 
 3. Select your project and set budget alerts on 5%, 25%, 50%, 80% of 50$ (in cloud console -> billing -> budget & alerts -> create buget; unclick discounts and promotions&others while creating budget).
 
-   ![img.png](doc/figures/discounts.png)
+    ![img.png](doc/figures/discounts.png)
 
-   DONE:
+    DONE:
 
-   ![img.png](doc/figures/phase1/budget-alerts-percentages.png)
+    ![img.png](doc/figures/phase1/budget-alerts-percentages.png)
 
-   ![img.png](doc/figures/phase1/budget-alerts.png)
+    ![img.png](doc/figures/phase1/budget-alerts.png)
+
 
 4. From available Github Actions select and run destroy on main branch.
 
-   DONE:
-   ![img.png](doc/figures/phase1/destroy-master.png)
+    DONE:
+    ![img.png](doc/figures/phase1/destroy-master.png)
 
 5. Create new git branch and:
 
-   1. Modify tasks-phase1.md file.
+    1. Modify tasks-phase1.md file.
 
-      DONE in: [a263ba8](https://github.com/karolstepanienko/tbd-workshop-1/pull/2/commits/a263ba8918de3c80cd2b184b86262ab719b64b47)
+        DONE in: [a263ba8](https://github.com/karolstepanienko/tbd-workshop-1/pull/2/commits/a263ba8918de3c80cd2b184b86262ab719b64b47)
 
-   2. Create PR from this branch to **YOUR** master and merge it to make new release.
+    2. Create PR from this branch to **YOUR** master and merge it to make new release.
 
-      DONE PR: [https://github.com/karolstepanienko/tbd-workshop-1/pull/2](https://github.com/karolstepanienko/tbd-workshop-1/pull/2)
+        DONE PR: [https://github.com/karolstepanienko/tbd-workshop-1/pull/2](https://github.com/karolstepanienko/tbd-workshop-1/pull/2)
 
-   **_place the screenshot from GA after successful application of release_**
+    ***place the screenshot from GA after successful application of release***
 
-   DONE:
-   ![img.png](doc/figures/phase1/release-apply.png)
+    DONE:
+    ![img.png](doc/figures/phase1/release-apply.png)
 
 6. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
-   **_describe one selected module and put the output of terraform graph for this module here_**
+    ***describe one selected module and put the output of terraform graph for this module here***
 
-   DONE:
-   <!-- terraform graph -type=plan | dot -Tpng > terraform-plan-graph-composer.png # to big
-   terraform graph -type=plan | dot -Tpng > terraform-plan-graph-gcr.png # great
-   terraform graph -type=plan | dot -Tpng > terraform-plan-graph-dataproc.png # great -->
+    DONE:
+    <!-- terraform graph -type=plan | dot -Tpng > terraform-plan-graph-composer.png # to big
+    terraform graph -type=plan | dot -Tpng > terraform-plan-graph-gcr.png # great
+    terraform graph -type=plan | dot -Tpng > terraform-plan-graph-dataproc.png # great -->
 
-   ```
-   terraform plan -var-file env/project.tfvars -out main.tfplan
-   ```
+    ```
+    terraform plan -var-file env/project.tfvars -out main.tfplan
+    ```
 
-   ![img.png](doc/figures/phase1/terraform-plan.png)
+    ![img.png](doc/figures/phase1/terraform-plan.png)
 
-   Module: vertex-ai-workbench
+    Module: vertex-ai-workbench
 
-   Description: This module is responsible for creating a Virtual Machine with
-   a preconfigured disk image that will have all the necessary tools for
-   interacting with infrastructure that runs Big Data analyses. It's more
-   efficient and easier to use rather than ensuring that our local private
-   machine has access to all necessary cloud resources. It also has an easily
-   accessible web interface.
+    Description: This module is responsible for creating a Virtual Machine with
+    a preconfigured disk image that will have all the necessary tools for
+    interacting with infrastructure that runs Big Data analyses. It's more
+    efficient and easier to use rather than ensuring that our local private
+    machine has access to all necessary cloud resources. It also has an easily
+    accessible web interface.
 
-   Resources:
+    Resources:
 
-   - `google_notebooks_instance` - creates and configures the VM,
-   - `google_project_service` - allows project access management to services
-     provided by Google (here it's notebooks API),
-   - `google_project_iam_binding` - assigns role (a set of permissions) to
-     a service account (here for creating short-lived credentials for
-     a service account that will be later used for authentication to
-     Google services from Jupyter notebooks)
-   - `google_storage_bucket` - creates a storage bucket, simplest form
-     of file storage in GCS
-   - `google_storage_bucket_iam_binding` - grants read-only access to
-     a storage bucket for a service account (necessary for fetching
-     the post startup script)
-   - `google_storage_bucket_object` - here uploads a notebook post startup
-     config script to GCS when running terraform apply
+    - `google_notebooks_instance` - creates and configures the VM,
+    - `google_project_service` - allows project access management to services
+        provided by Google (here it's notebooks API),
+    - `google_project_iam_binding` - assigns role (a set of permissions) to
+        a service account (here for creating short-lived credentials for
+        a service account that will be later used for authentication to
+        Google services from Jupyter notebooks)
+    - `google_storage_bucket` - creates a storage bucket, simplest form
+        of file storage in GCS
+    - `google_storage_bucket_iam_binding` - grants read-only access to
+        a storage bucket for a service account (necessary for fetching
+        the post startup script)
+    - `google_storage_bucket_object` - here uploads a notebook post startup
+        config script to GCS when running terraform apply
 
-   Graph:
+    Graph:
 
-   ```
-   cd modules/vertex-ai-workbench
-   terraform init -upgrade
-   terraform graph -type=plan | dot -Tpng > terraform-plan-graph-vertex-ai-workbench.png
-   ```
+    ```
+    cd modules/vertex-ai-workbench
+    terraform init -upgrade
+    terraform graph -type=plan | dot -Tpng > terraform-plan-graph-vertex-ai-workbench.png
+    ```
 
-   ![img.png](doc/figures/phase1/terraform-plan-graph-vertex-ai-workbench.png)
+    ![img.png](doc/figures/phase1/terraform-plan-graph-vertex-ai-workbench.png)
 
 7. Reach YARN UI
 
-   **_place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here_**
+   ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
 
    DONE:
 
-   ```bash
-   # Create an SSH tunnel using local port 1080
-   gcloud compute ssh tbd-cluster-m \
-   --project=tbd-2024z-303772 \
-   --zone=europe-west1-d -- -D 1080 -N
+    ```bash
+    # Create an SSH tunnel using local port 1080
+    gcloud compute ssh tbd-cluster-m \
+    --project=tbd-2024z-303772 \
+    --zone=europe-west1-d -- -D 1080 -N
 
-   # Run Chrome and connect through the proxy
-   /usr/bin/google-chrome --proxy-server="socks5://localhost:1080" \
-   --user-data-dir="/tmp/tbd-cluster-m" http://tbd-cluster-m:8088
-   ```
+    # Run Chrome and connect through the proxy
+    /usr/bin/google-chrome --proxy-server="socks5://localhost:1080" \
+    --user-data-dir="/tmp/tbd-cluster-m" http://tbd-cluster-m:8088
+    ```
 
-   ![img.png](doc/figures/phase1/YARN-UI.png)
+    ![img.png](doc/figures/phase1/YARN-UI.png)
 
 8. Draw an architecture diagram (e.g. in draw.io) that includes:
 
-   1. **VPC topology with service assignment to subnets**
+    1. **VPC topology with service assignment to subnets**
 
-   - **Subnet 1**: `composer-subnet` (CIDR: `10.10.10.0/24`) for Google Composer.
-   - **Subnet 2**: `vertex-ai-subnet` (CIDR: `10.20.10.0/24`) for Vertex AI Workbench and Dataproc.
-   - **Routing**: Managed by a global VPC with a NAT gateway and internet access enabled for necessary resources.
+    - **Subnet 1**: `composer-subnet` (CIDR: `10.10.10.0/24`) for Google Composer.
+    - **Subnet 2**: `vertex-ai-subnet` (CIDR: `10.20.10.0/24`) for Vertex AI Workbench and Dataproc.
+    - **Routing**: Managed by a global VPC with a NAT gateway and internet access enabled for necessary resources.
 
-   2. **Description of the components of service accounts**
+    2. **Description of the components of service accounts**
 
-   - **tbd-composer-sa**: This service account is primarily used by **Cloud Composer** to manage workflows and integrate with Dataproc clusters.
-     - **Roles**:
-       - `roles/composer.worker`: Allows Cloud Composer to execute its workflows.
-       - `roles/dataproc.editor`: Enables integration and management of Dataproc resources.
-       - `roles/iam.serviceAccountUser`: Grants the ability to impersonate service accounts and assign temporary credentials.
-   - **iac**: This service account is responsible for the **deployment and management of infrastructure** using Terraform and other automation tools.
-     - **Role**:
-       - Provides permissions for managing infrastructure resources across the project.
-   - **tbd-terraform**: This service account is used to **manage the Terraform state** stored in buckets and to ensure state consistency during infrastructure deployments.
-     - **Role**:
-       - Facilitates Terraform workflows by securely handling the state file stored in the `tbd-state-bucket`.
+    - **tbd-composer-sa**: This service account is primarily used by **Cloud Composer** to manage workflows and integrate with Dataproc clusters.
+        - **Roles**:
+        - `roles/composer.worker`: Allows Cloud Composer to execute its workflows.
+        - `roles/dataproc.editor`: Enables integration and management of Dataproc resources.
+        - `roles/iam.serviceAccountUser`: Grants the ability to impersonate service accounts and assign temporary credentials.
+    - **iac**: This service account is responsible for the **deployment and management of infrastructure** using Terraform and other automation tools.
+        - **Role**:
+        - Provides permissions for managing infrastructure resources across the project.
+    - **tbd-terraform**: This service account is used to **manage the Terraform state** stored in buckets and to ensure state consistency during infrastructure deployments.
+        - **Role**:
+        - Facilitates Terraform workflows by securely handling the state file stored in the `tbd-state-bucket`.
 
-   3. **List of buckets for disposal**
+    3. **List of buckets for disposal**
 
-   - **`notebook-conf-bucket`**: Stores initialization scripts for Vertex AI Workbench.
-   - **`tbd-code-bucket`**: Contains Spark job scripts.
-   - **`tbd-data-bucket`**: Stores data for Spark operations.
-   - **`tbd-state-bucket`**: Used for Terraform state management.
+    - **`notebook-conf-bucket`**: Stores initialization scripts for Vertex AI Workbench.
+    - **`tbd-code-bucket`**: Contains Spark job scripts.
+    - **`tbd-data-bucket`**: Stores data for Spark operations.
+    - **`tbd-state-bucket`**: Used for Terraform state management.
 
-   4. **Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech**
+    4. **Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech**
 
-   - **Apache Spark Communication**:
-     - Spark Driver communicates with Spark Master using **port 7077**.
-     - Spark Master distributes tasks to Spark Workers using **port 7077**.
-     - Spark Driver monitors tasks via **port 4040**.
-   - **Why specify the host for the driver?**
-     - Vertex AI Workbench and Dataproc are in separate subnets. Specifying the host ensures the driver can communicate efficiently with the Spark cluster across subnets, leveraging private IPs.
+    - **Apache Spark Communication**:
+        - Spark Driver communicates with Spark Master using **port 7077**.
+        - Spark Master distributes tasks to Spark Workers using **port 7077**.
+        - Spark Driver monitors tasks via **port 4040**.
+    - **Why specify the host for the driver?**
+        - Vertex AI Workbench and Dataproc are in separate subnets. Specifying the host ensures the driver can communicate efficiently with the Spark cluster across subnets, leveraging private IPs.
 
-   The architecture diagram below represents:
+    The architecture diagram below represents:
 
-   - VPC topology with subnet assignments.
-   - Service accounts and their connected resources.
-   - Buckets for disposal and their usage.
-   - Apache Spark communication flow.
+    - VPC topology with subnet assignments.
+    - Service accounts and their connected resources.
+    - Buckets for disposal and their usage.
+    - Apache Spark communication flow.
 
-   DONE:
-   ![architecture.png](doc/figures/phase1/architecture.png)
+    DONE:
+    ![architecture.png](doc/figures/phase1/architecture.png)
 
 9. Create a new PR and add costs by entering the expected consumption into Infracost
-   For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
-   create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml)
+For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
+create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml)
 
-   **_place the expected consumption you entered here_**
+    ***place the expected consumption you entered here***
 
-   **_place the screenshot from infracost output here_**
+    DONE:
+
+    [infracost-usage.yml](https://github.com/karolstepanienko/tbd-workshop-1/blob/master/infracost-usage.yml)
+
+    [infracost comment in PR](https://github.com/karolstepanienko/tbd-workshop-1/pull/8#issuecomment-2484205298)
+
+    ***place the screenshot from infracost output here***
+    ![img.png](doc/figures/phase1/infracost.png)
 
 10. Create a BigQuery dataset and an external table using SQL
 
-    **_place the code and output here_**
+    ***place the code and output here***
 
     DONE:
 
@@ -217,7 +225,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
     Data loaded to the table: [example-data.csv](https://github.com/karolstepanienko/tbd-workshop-1/blob/master/example-data.csv)
 
-    **_why does ORC not require a table schema?_**
+    ***why does ORC not require a table schema?***
 
     DONE:
 
@@ -227,7 +235,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 11. Start an interactive session from Vertex AI workbench:
 
-    **_place the screenshot of notebook here_**
+    ***place the screenshot of notebook here***
 
     DONE:
 
@@ -244,7 +252,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 12. Find and correct the error in spark-job.py
 
-    **_describe the cause and how to find the error_**
+    ***describe the cause and how to find the error***
 
     DONE:
 
@@ -296,13 +304,13 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
-    **_place the link to the modified file and inserted terraform code_**
+    ***place the link to the modified file and inserted terraform code***
 
     DONE: Commit: [3625130](https://github.com/karolstepanienko/tbd-workshop-1/commit/3625130dda5f053f1125383b58add1c06f22c984)
 
     2. Add support for preemptible/spot instances in a Dataproc cluster
 
-    **_place the link to the modified file and inserted terraform code_**
+    ***place the link to the modified file and inserted terraform code***
 
     DONE: Commit: [fc53da8](https://github.com/karolstepanienko/tbd-workshop-1/commit/fc53da86bf7b9b60d568737caa05a677312e6f1b)
 
@@ -310,7 +318,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
     3. Perform additional hardening of Jupyterlab environment, i.e. disable sudo access and enable secure boot
 
-    **_place the link to the modified file and inserted terraform code_**
+    ***place the link to the modified file and inserted terraform code***
 
     DONE: Commit: [37eb083](https://github.com/karolstepanienko/tbd-workshop-1/commit/37eb08336eec5826e87da04a0aac0a0fa41f4982)
 
@@ -318,4 +326,4 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
     4. (Optional) Get access to Apache Spark WebUI
 
-    **_place the link to the modified file and inserted terraform code_**
+    ***place the link to the modified file and inserted terraform code***
