@@ -149,6 +149,13 @@ the instructions
     DONE:
     ![img.png](doc/figures/phase1/JupiterLab-hello-world.png)
 
+    ![img.png](doc/figures/phase1/JupiterLab-hello-world-spark.png)
+
+    `spark` command will fail if spark session is stopped.
+    ```
+    : java.lang.IllegalStateException: LiveListenerBus is stopped.
+    ```
+
 10. **Workshop 2** exercises are described in [Jupyter notebook](notebooks/workshop_2_mlops.ipynb)
 
 
