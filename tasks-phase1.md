@@ -162,8 +162,9 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    - Service accounts and their connected resources.
    - Buckets for disposal and their usage.
    - Apache Spark communication flow.
-     DONE:
-     ![architecture.png](doc/figures/phase1/architecture.png)
+
+   DONE:
+   ![architecture.png](doc/figures/phase1/architecture.png)
 
 9. Create a new PR and add costs by entering the expected consumption into Infracost
    For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
