@@ -327,3 +327,15 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     4. (Optional) Get access to Apache Spark WebUI
 
     ***place the link to the modified file and inserted terraform code***
+
+    DONE:
+
+    <!-- https://stackoverflow.com/a/33193325/22900279 -->
+    Accessing Apache Spark WebUI is possible through YARN UI and does not
+    require any terraform code modifications.
+
+    In YARN UI link titled 'ApplicationMaster' leads to Apache Spark WebUI.
+    ![img.png](doc/figures/phase1/YARN-UI-ApacheSparkWebUI.png)
+    All the Apache Spark WebUI top row menu item links worked as expected.
+    ![img.png](doc/figures/phase1/ApacheSparkWebUI.png)
+    ![img.png](doc/figures/phase1/ApacheSparkWebUI-stages.png)
