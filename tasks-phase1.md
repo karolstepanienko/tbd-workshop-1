@@ -127,25 +127,22 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    - **Routing**: Managed by a global VPC with a NAT gateway and internet access enabled for necessary resources.
 
    2. Description of the components of service accounts
-   1. **tbd-composer-sa**:
 
-   - **Purpose**: This service account is primarily used by **Cloud Composer** to manage workflows and integrate with Dataproc clusters.
-   - **Roles**:
-     - `roles/composer.worker`: Allows Cloud Composer to execute its workflows.
-     - `roles/dataproc.editor`: Enables integration and management of Dataproc resources.
-     - `roles/iam.serviceAccountUser`: Grants the ability to impersonate service accounts and assign temporary credentials.
+   - **tbd-composer-sa**: This service account is primarily used by **Cloud Composer** to manage workflows and integrate with Dataproc clusters.
 
-   2. **iac**:
+     - **Roles**:
+       - `roles/composer.worker`: Allows Cloud Composer to execute its workflows.
+       - `roles/dataproc.editor`: Enables integration and management of Dataproc resources.
+       - `roles/iam.serviceAccountUser`: Grants the ability to impersonate service accounts and assign temporary credentials.
 
-   - **Purpose**: This service account is responsible for the **deployment and management of infrastructure** using Terraform and other automation tools.
-   - **Role**:
-     - Provides permissions for managing infrastructure resources across the project.
+   - **iac**: This service account is responsible for the **deployment and management of infrastructure** using Terraform and other automation tools.
 
-   3. **tbd-terraform**:
+     - **Role**:
+       - Provides permissions for managing infrastructure resources across the project.
 
-   - **Purpose**: This service account is used to **manage the Terraform state** stored in buckets and to ensure state consistency during infrastructure deployments.
-   - **Role**:
-     - Facilitates Terraform workflows by securely handling the state file stored in the `tbd-state-bucket`.
+   - **tbd-terraform**: This service account is used to **manage the Terraform state** stored in buckets and to ensure state consistency during infrastructure deployments.
+     - **Role**:
+       - Facilitates Terraform workflows by securely handling the state file stored in the `tbd-state-bucket`.
 
    3. List of buckets for disposal
 
