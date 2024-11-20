@@ -157,6 +157,7 @@ the instructions
     ```
 
 10. **Workshop 2** exercises are described in [Jupyter notebook](notebooks/workshop_2_mlops.ipynb)
+<!-- workshop* files are for a different course named ADAC -->
 
 
 11. **IMPORTANT**
