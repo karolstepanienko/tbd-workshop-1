@@ -127,44 +127,44 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    - **Routing**: Managed by a global VPC with a NAT gateway and internet access enabled for necessary resources.
 
    2. Description of the components of service accounts
+   1. **tbd-composer-sa**:
 
-   - **`tbd-composer-sa`**:
-   - Used by Google Composer.
-   - Roles:
-   - `roles/composer.worker`: Allows Cloud Composer to operate.
-   - `roles/dataproc.editor`: Enables Dataproc operations.
-   - `roles/iam.serviceAccountUser`: Manages IAM policies.
-   - **Vertex AI Service Account**:
-   - Default Compute Engine service account.
-   - Role: `roles/storage.objectViewer` for accessing initialization scripts from storage buckets.
-   - **Data Pipeline Service Account**:
-   - Used for Spark jobs and DAG uploads.
-   - Roles:
-   - `roles/storage.objectViewer`: Reads bucket files.
-   - `roles/storage.objectUser`: Manages data storage.
+   - **Purpose**: This service account is primarily used by **Cloud Composer** to manage workflows and integrate with Dataproc clusters.
+   - **Roles**:
+     - `roles/composer.worker`: Allows Cloud Composer to execute its workflows.
+     - `roles/dataproc.editor`: Enables integration and management of Dataproc resources.
+     - `roles/iam.serviceAccountUser`: Grants the ability to impersonate service accounts and assign temporary credentials.
+
+   2. **iac**:
+
+   - **Purpose**: This service account is responsible for the **deployment and management of infrastructure** using Terraform and other automation tools.
+   - **Role**:
+     - Provides permissions for managing infrastructure resources across the project.
+
+   3. **tbd-terraform**:
+
+   - **Purpose**: This service account is used to **manage the Terraform state** stored in buckets and to ensure state consistency during infrastructure deployments.
+   - **Role**:
+     - Facilitates Terraform workflows by securely handling the state file stored in the `tbd-state-bucket`.
 
    3. List of buckets for disposal
 
-   - **`notebook-conf-bucket`**:
-   - Stores initialization scripts for Vertex AI Workbench.
+   - **`notebook-conf-bucket`**: Stores initialization scripts for Vertex AI Workbench.
 
-   - **`tbd-code-bucket`**:
-   - Contains Spark job scripts.
+   - **`tbd-code-bucket`**: Contains Spark job scripts.
 
-   - **`tbd-data-bucket`**:
-   - Stores data for Spark operations.
+   - **`tbd-data-bucket`**: Stores data for Spark operations.
 
-   - **`tbd-state-bucket`**:
-   - Used for Terraform state management.
+   - **`tbd-state-bucket`**: Used for Terraform state management.
 
    4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
 
    - **Apache Spark Communication**:
-   - Spark Driver communicates with Spark Master using **port 7077**.
-   - Spark Master distributes tasks to Spark Workers using **port 7077**.
-   - Spark Driver monitors tasks via **port 4040**.
+     - Spark Driver communicates with Spark Master using **port 7077**.
+     - Spark Master distributes tasks to Spark Workers using **port 7077**.
+     - Spark Driver monitors tasks via **port 4040**.
    - **Why specify the host for the driver?**
-   - Vertex AI Workbench and Dataproc are in separate subnets. Specifying the host ensures the driver can communicate efficiently with the Spark cluster across subnets, leveraging private IPs.
+     - Vertex AI Workbench and Dataproc are in separate subnets. Specifying the host ensures the driver can communicate efficiently with the Spark cluster across subnets, leveraging private IPs.
 
    ***
 
