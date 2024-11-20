@@ -319,12 +319,3 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     4. (Optional) Get access to Apache Spark WebUI
 
     **_place the link to the modified file and inserted terraform code_**
-
-    Maybe DONE:
-
-    Accessing Apache Spark WebUI (Apache Airflow) does not require modifying
-    terraform code. Link is available in Cloud Composer GCP WEB console:
-    ![img.png](doc/figures/phase1/How-to-access-ApacheAirflow-UI.png)
-    which opens Apache Airflow WEB GUI:
-    ![img.png](doc/figures/phase1/ApacheSpark-Airflow-UI.png)
-    Authentication is done through OAuth 2.0 protocol using a federated identity from Google.
