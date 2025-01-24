@@ -178,9 +178,11 @@ Worth to read:
 
    Created data structure uses the Medallion architecture, with 4 databases where data quality and usefulness increases in each consecutive database.
 
-9. Using SparkSQL answer: how many table were created in each layer?
+9. Using SparkSQL answer: how many tables were created in each layer?
 
    ***SparkSQL command and output***
+
+   DONE:
 
    ```Python
    databases = spark.sql("show databases").collect()
@@ -191,7 +193,7 @@ Worth to read:
       print(f"Layer {layer} has {table_count} tables.")
    ```
 
-   TODO output
+   ![tables-in-layers.png](doc/figures/phase2/tables-in-layers.png)
 
 10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing.
 
@@ -231,7 +233,9 @@ Worth to read:
    where day_of_week_desc not in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
    ```
 
-   TODO tests passed screenshot
+   All 4 tests passed successfully:
+
+   ![dbt-test-success.png](doc/figures/phase2/dbt-test-success.png)
 
 11. In main.tf update
    ```
