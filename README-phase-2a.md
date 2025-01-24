@@ -112,9 +112,39 @@ Worth to read:
 
    ***SparkSQL command and output***
 
-10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing. ***Add new tests to your repository.***
+10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing.
+
+   ***Add new tests to your repository.***
+
+   DONE in:
+   [589e6fe](https://github.com/karolstepanienko/tbd-tpc-di/commit/589e6fe621381eb57237d3d3344fb0d4d8d61e14)
 
    ***Code and description of your tests***
+
+   `test_dates.sql`: Detects erroneous records where removal happened before creation.
+   ```SQL
+   select
+      sk_date_placed,
+      sk_date_removed
+   from {{ ref('fact_watches') }}
+   where sk_date_placed > sk_date_removed
+   ```
+
+   `test_tax_values.sql`: Detects records where tax value was negative.
+   ```SQL
+   select
+      tax
+   from {{ ref('trades') }}
+   where tax < 0
+   ```
+
+   `test_week_day_names.sql`: Detects records where day of week name was not in an allowed set.
+   ```SQL
+   select
+      day_of_week_desc
+   from {{ ref('dim_date') }}
+   where day_of_week_desc not in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+   ```
 
 11. In main.tf update
    ```
