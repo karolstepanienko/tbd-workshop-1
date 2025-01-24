@@ -2,6 +2,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 ![img.png](doc/figures/destroy.png)
 
+
 0. The goal of this phase is to create infrastructure, perform benchmarking/scalability tests of sample three-tier lakehouse solution and analyze the results using:
 * [TPC-DI benchmark](https://www.tpc.org/tpcdi/)
 * [dbt - data transformation tool](https://www.getdbt.com/)
@@ -16,24 +17,39 @@ Worth to read:
 * https://medium.com/snowflake/loading-the-tpc-di-benchmark-dataset-into-snowflake-96011e2c26cf
 * https://www.databricks.com/blog/2023/04/14/how-we-performed-etl-one-billion-records-under-1-delta-live-tables.html
 
+
 2. Authors:
 
    ***Enter your group nr***
 
+   DONE:
+   Team 4
+
    ***Link to forked repo***
 
+   DONE:
+   [https://github.com/karolstepanienko/tbd-workshop-1](https://github.com/karolstepanienko/tbd-workshop-1)
+
+
 3. Sync your repo with https://github.com/bdg-tbd/tbd-workshop-1.
+
+   DONE: sync was not necessary:
+   ![sync-not-necessary.png](doc/figures/phase2/sync-not-necessary.png)
+
 
 4. Provision your infrastructure.
 
     a) setup Vertex AI Workbench `pyspark` kernel as described in point [8](https://github.com/bdg-tbd/tbd-workshop-1/tree/v1.0.32#project-setup) 
 
-    b) upload [tpc-di-setup.ipynb](https://github.com/bdg-tbd/tbd-workshop-1/blob/v1.0.36/notebooks/tpc-di-setup.ipynb) to 
-the running instance of your Vertex AI Workbench
+    b) upload [tpc-di-setup.ipynb](https://github.com/bdg-tbd/tbd-workshop-1/blob/v1.0.36/notebooks/tpc-di-setup.ipynb) to the running instance of your Vertex AI Workbench
+
 
 5. In `tpc-di-setup.ipynb` modify cell under section ***Clone tbd-tpc-di repo***:
 
    a)first, fork https://github.com/mwiewior/tbd-tpc-di.git to your github organization.
+
+   DONE:
+   [https://github.com/karolstepanienko/tbd-tpc-di](https://github.com/karolstepanienko/tbd-tpc-di)
 
    b)create new branch (e.g. 'notebook') in your fork of tbd-tpc-di and modify profiles.yaml by commenting following lines:
    ```  
@@ -44,15 +60,21 @@ the running instance of your Vertex AI Workbench
    ```
    This lines are required to run dbt on airflow but have to be commented while running dbt in notebook.
 
+   DONE in:
+   [d949851](https://github.com/karolstepanienko/tbd-tpc-di/commit/d949851299633ffa68745d40ec05a44ec46e7602)
+
    c)update git clone command to point to ***your fork***.
 
- 
+   DONE in:
+   [f767210](https://github.com/karolstepanienko/tbd-workshop-1/commit/f7672107a56d1a5bab90fa89fc348ef061e9ca1f)
 
 
 6. Access Vertex AI Workbench and run cell by cell notebook `tpc-di-setup.ipynb`.
 
-    a) in the first cell of the notebook replace: `%env DATA_BUCKET=tbd-2023z-9910-data` with your data bucket.
+   a) in the first cell of the notebook replace: `%env DATA_BUCKET=tbd-2023z-9910-data` with your data bucket.
 
+   DONE in:
+   [9cc64d6](https://github.com/karolstepanienko/tbd-workshop-1/commit/9cc64d685c9299d35e06d8e9f505d4b4a3a6d837)
 
    b) in the cell:
          ```%%bash
@@ -62,10 +84,13 @@ the running instance of your Vertex AI Workbench
          git pull
          ```
       replace repo with your fork. Next checkout to 'notebook' branch.
-   
-    c) after running first cells your fork of `tbd-tpc-di` repository will be cloned into Vertex AI  enviroment (see git folder).
 
-    d) take a look on `git/tbd-tpc-di/profiles.yaml`. This file includes Spark parameters that can be changed if you need to increase the number of executors and
+   DONE in:
+   [f767210](https://github.com/karolstepanienko/tbd-workshop-1/commit/f7672107a56d1a5bab90fa89fc348ef061e9ca1f)
+
+   c) after running first cells your fork of `tbd-tpc-di` repository will be cloned into Vertex AI  environment (see git folder).
+
+   d) take a look on `git/tbd-tpc-di/profiles.yaml`. This file includes Spark parameters that can be changed if you need to increase the number of executors and
   ```
    server_side_parameters:
        "spark.driver.memory": "2g"
@@ -77,7 +102,7 @@ the running instance of your Vertex AI Workbench
 
 7. Explore files created by generator and describe them, including format, content, total size.
 
-   ***Files desccription***
+   ***Files description***
 
 8. Analyze tpcdi.py. What happened in the loading stage?
 
@@ -96,7 +121,10 @@ the running instance of your Vertex AI Workbench
    dbt_git_repo            = "https://github.com/mwiewior/tbd-tpc-di.git"
    dbt_git_repo_branch     = "main"
    ```
-   so dbt_git_repo points to your fork of tbd-tpc-di. 
+   so dbt_git_repo points to your fork of tbd-tpc-di.
+
+   DONE in:
+   [2be45f0](https://github.com/karolstepanienko/tbd-workshop-1/commit/2be45f054fe7b54aa2975924d4845d25ddc06540)
 
 12. Redeploy infrastructure and check if the DAG finished with no errors:
 
