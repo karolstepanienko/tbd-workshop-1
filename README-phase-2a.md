@@ -39,7 +39,7 @@ Worth to read:
 
 4. Provision your infrastructure.
 
-    a) setup Vertex AI Workbench `pyspark` kernel as described in point [8](https://github.com/bdg-tbd/tbd-workshop-1/tree/v1.0.32#project-setup) 
+    a) setup Vertex AI Workbench `pyspark` kernel as described in point [8](https://github.com/bdg-tbd/tbd-workshop-1/tree/v1.0.32#project-setup)
 
     b) upload [tpc-di-setup.ipynb](https://github.com/bdg-tbd/tbd-workshop-1/blob/v1.0.36/notebooks/tpc-di-setup.ipynb) to the running instance of your Vertex AI Workbench
 
@@ -104,9 +104,45 @@ Worth to read:
 
    ***Files description***
 
+   Data Generation utility for TPC-DI benchmark was invoked with the following command:
+   ```bash
+   java -jar DIGen.jar -sf 100 -o /tmp/tpc-di
+   ```
+   This generated around 9.6 GiB of data files. Generation process is very CPU dependant and the time of generation can be lowered to less than a minute on a system with a faster CPU.
+
+   Generator summarises generated records:
+   `AuditTotalRecordsSummaryWriter - TotalRecords all Batches: 162228471 3891210.84 records/second`
+
+   Top level generated file structure:
+   ![DIGen-local-run.png](doc/figures/phase2/DIGen-local-run.png)
+
+   Sizes of folders with generated data:
+   ![DIGen-size-folders.png](doc/figures/phase2/DIGen-size-folders.png)
+   Majority of generated data is stored in the `Batch1` folder. Taking a closer look at the contents of this folder, it's quite obvious that majority of the generated data is related to various trades performed in a specified period of time. Biggest files store trading history:
+   ![DIGen-size-txt.png](doc/figures/phase2/DIGen-size-txt.png)
+   Folder `Batch1` stores also 203 `FINWIRE<year><quarter>` (from 1967Q1 to 2017Q3) files totalling around 1.1G.
+
+   Generated data is separated (in dedicated .txt or .csv files) from metadata in .csv files with a matching name that describes the generation process.
+
+   Some of the generated data files:
+   
+   CashTransaction.txt:
+      - Column names: CT_CA_ID, CT_DTS, CT_AMT, CT_NAME
+      - content: transaction ID, date, amount of money spent, transaction name
+      - separator: `|`
+   CustomerMgmt.xml:
+      - content: a collection of customers data including names, address, contact info, tax info, and account
+   DailyMarket.txt:
+      - column names: DM_DATE, DM_S_SYMB, DM_CLOSE, DM_HIGH, DM_LOW, DM_VOL
+      - content: clearly financial data describing stock prices at a given day
+      - separator: `|`
+
+   In summary generated files have heavily varied contents saved in various different file formats. Truly a challenging dataset to analyse, which explains the need of data transformation tool like `dbt`.
+
 8. Analyze tpcdi.py. What happened in the loading stage?
 
    ***Your answer***
+
    `tpcdi.py` is a script that loads data from files generated locally by a TPC-DI benchmark generator (DIGen.jar) into a remotely accessible Data Lakehouse.
 
    Steps executed in the file:
