@@ -41,7 +41,13 @@ Worth to read:
 
     a) setup Vertex AI Workbench `pyspark` kernel as described in point [8](https://github.com/bdg-tbd/tbd-workshop-1/tree/v1.0.32#project-setup)
 
+   DONE:
+   ![pyspark-kernel-available.png](doc/figures/phase2/pyspark-kernel-available.png)
+
     b) upload [tpc-di-setup.ipynb](https://github.com/bdg-tbd/tbd-workshop-1/blob/v1.0.36/notebooks/tpc-di-setup.ipynb) to the running instance of your Vertex AI Workbench
+
+   DONE:
+   ![uploaded-tpc-di-setup.png](doc/figures/phase2/uploaded-tpc-di-setup.png)
 
 
 5. In `tpc-di-setup.ipynb` modify cell under section ***Clone tbd-tpc-di repo***:
@@ -90,6 +96,9 @@ Worth to read:
 
    c) after running first cells your fork of `tbd-tpc-di` repository will be cloned into Vertex AI  environment (see git folder).
 
+   DONE repo available:
+   ![checked-out-tbd-tpc-di-repo.png](doc/figures/phase2/checked-out-tbd-tpc-di-repo.png)
+
    d) take a look on `git/tbd-tpc-di/profiles.yaml`. This file includes Spark parameters that can be changed if you need to increase the number of executors and
   ```
    server_side_parameters:
@@ -104,6 +113,14 @@ Worth to read:
 
    ***Files description***
 
+   File generation was impossible from the level of the Jupiter notebook due to this error:
+   ```
+   PDGF:> ERROR! Command 'null' is unknown. Enter 'help' to see a list of available commands
+   DIGen failed with non-zero return code from PDGF.
+   ```
+   Generation worked only in a terminal.
+   ![generation-worked.png](doc/figures/phase2/generation-worked.png)
+
    Data Generation utility for TPC-DI benchmark was invoked with the following command:
    ```bash
    java -jar DIGen.jar -sf 100 -o /tmp/tpc-di
@@ -114,12 +131,17 @@ Worth to read:
    `AuditTotalRecordsSummaryWriter - TotalRecords all Batches: 162228471 3891210.84 records/second`
 
    Top level generated file structure:
+
    ![DIGen-local-run.png](doc/figures/phase2/DIGen-local-run.png)
 
    Sizes of folders with generated data:
+
    ![DIGen-size-folders.png](doc/figures/phase2/DIGen-size-folders.png)
+
    Majority of generated data is stored in the `Batch1` folder. Taking a closer look at the contents of this folder, it's quite obvious that majority of the generated data is related to various trades performed in a specified period of time. Biggest files store trading history:
+
    ![DIGen-size-txt.png](doc/figures/phase2/DIGen-size-txt.png)
+
    Folder `Batch1` stores also 203 `FINWIRE<year><quarter>` (from 1967Q1 to 2017Q3) files totalling around 1.1G.
 
    Generated data is separated (in dedicated .txt or .csv files) from metadata in .csv files with a matching name that describes the generation process.
@@ -176,7 +198,11 @@ Worth to read:
    ***Add new tests to your repository.***
 
    DONE in:
-   [589e6fe](https://github.com/karolstepanienko/tbd-tpc-di/commit/589e6fe621381eb57237d3d3344fb0d4d8d61e14)
+
+   main branch: [9aa2013](https://github.com/karolstepanienko/tbd-tpc-di/commit/9aa201318c1934925fec6fee20eb2713fc01957b)
+
+   notebook branch: [589e6fe](https://github.com/karolstepanienko/tbd-tpc-di/commit/589e6fe621381eb57237d3d3344fb0d4d8d61e14)
+
 
    ***Code and description of your tests***
 
@@ -205,6 +231,8 @@ Worth to read:
    where day_of_week_desc not in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
    ```
 
+   TODO tests passed screenshot
+
 11. In main.tf update
    ```
    dbt_git_repo            = "https://github.com/mwiewior/tbd-tpc-di.git"
@@ -218,3 +246,6 @@ Worth to read:
 12. Redeploy infrastructure and check if the DAG finished with no errors:
 
 ***The screenshot of Apache Aiflow UI***
+
+DONE, all DAGs finished with no errors:
+![airflow-ui-all-passed.png](doc/figures/phase2/airflow-ui-all-passed.png)
