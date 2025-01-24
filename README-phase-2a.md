@@ -107,10 +107,33 @@ Worth to read:
 8. Analyze tpcdi.py. What happened in the loading stage?
 
    ***Your answer***
+   `tpcdi.py` is a script that loads data from files generated locally by a TPC-DI benchmark generator (DIGen.jar) into a remotely accessible Data Lakehouse.
+
+   Steps executed in the file:
+   1. Creating a connection to Apache Hive data warehouse system.
+   2. Create necessary databases:
+   ```Python
+   ['digen', 'bronze', 'silver', 'gold']
+   ```
+   3. Run `load_csv` method for each data file, which creates a table from a CSV file.
+   4. Data from FINWIRE files is not loaded directly all to one table, instead selected subsets of columns from those files are loaded to three dedicated tables: cmp, sec, fin. This is accomplished using a temporary view 'finwire'.
+
+   Created data structure uses the Medallion architecture, with 4 databases where data quality and usefulness increases in each consecutive database.
 
 9. Using SparkSQL answer: how many table were created in each layer?
 
    ***SparkSQL command and output***
+
+   ```Python
+   databases = spark.sql("show databases").collect()
+   layers = [db.namespace for db in databases]
+   for layer in layers:
+      spark.sql(f"use {layer}")
+      table_count = spark.sql("show tables").count()
+      print(f"Layer {layer} has {table_count} tables.")
+   ```
+
+   TODO output
 
 10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing.
 
