@@ -1,7 +1,7 @@
 import json
 import re
 
-TPC_DI_NOTEBOOK_PATH = './run-smaller-vm-2e/tpc-di-setup.ipynb'
+TPC_DI_NOTEBOOK_PATH = './e2-standard-2/2n/2e/tpc-di-setup.ipynb'
 LOAD_CELL_ID = 18
 DBT_RUN_CELL_ID = 4
 
