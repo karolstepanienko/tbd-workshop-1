@@ -64,6 +64,19 @@ def save_dicts_to_csv(dict_2n_e1, dict_2n_e2, dict_2n_e5, dict_5n_e5):
     file.write(csv_string)
     file.close()
 
+def print_markdown_table(dict_2n_e1, dict_2n_e2, dict_2n_e5, dict_5n_e5):
+    assert(dict_2n_e1.keys() == dict_2n_e2.keys() == dict_2n_e5.keys() == dict_5n_e5.keys())
+
+    table_string =  "| db.table | 2n_e1 | 2n_e2 | 2n_e5 | 5n_e5 |\n"
+    table_string += "| -------- | ----- | ----- | ----- | ----- |\n"
+    for key in dict_2n_e1.keys():
+        table_string += key + " | " \
+            + str(dict_2n_e1[key]) + " | " \
+            + str(dict_2n_e2[key]) + " | " \
+            + str(dict_2n_e5[key]) + " | " \
+            + str(dict_5n_e5[key]) + " |\n"
+    print(table_string)
+
 def print_times(path):
     times = get_table_creation_times_dict(path)
     print(times)
@@ -193,6 +206,13 @@ plot_total_time_with_nodes(
 )
 
 plot_times_with_nodes(
+    get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_2n_1e),
+    get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_2n_2e),
+    get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_2n_5e),
+    get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_5n_5e)
+)
+
+print_markdown_table(
     get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_2n_1e),
     get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_2n_2e),
     get_table_creation_times_dict(TPC_DI_NOTEBOOK_PATH_2n_5e),
