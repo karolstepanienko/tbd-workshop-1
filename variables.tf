@@ -23,7 +23,7 @@ variable "dataproc_master_num_instances" {
 variable "dataproc_master_machine_type" {
   type        = string
   description = "Machine type to use for master nodes in Dataproc cluster"
-  default     = "e2-standard-2"
+  default     = "e2-standard-4"
 }
 
 variable "dataproc_worker_num_instances" {
@@ -35,7 +35,7 @@ variable "dataproc_worker_num_instances" {
 variable "dataproc_worker_machine_type" {
   type        = string
   description = "Machine type to use for worker nodes in Dataproc cluster"
-  default     = "e2-standard-2"
+  default     = "e2-standard-4"
 }
 
 variable "ai_notebook_machine_type" {
