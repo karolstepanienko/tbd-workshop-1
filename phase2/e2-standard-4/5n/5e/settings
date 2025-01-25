@@ -1,0 +1,5 @@
+
+{
+    "spark.executor.memory": "12g",
+    "spark.executor.instances": "5"
+}

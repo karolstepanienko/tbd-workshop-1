@@ -1,7 +1,7 @@
 import json
 import re
 
-TPC_DI_NOTEBOOK_PATH = './e2-standard-2/2n/2e/tpc-di-setup.ipynb'
+TPC_DI_NOTEBOOK_PATH = './e2-standard-4/5n/5e/tpc-di-setup.ipynb'
 LOAD_CELL_ID = 18
 DBT_RUN_CELL_ID = 4
 
@@ -22,6 +22,7 @@ with open(TPC_DI_NOTEBOOK_PATH, 'r') as file:
 
 json_data = json.loads(data)
 dbt_run_lines = json_data["cells"][LOAD_CELL_ID]["outputs"][DBT_RUN_CELL_ID]['text']
+# print(dbt_run_lines)
 
 table_creation_times_dict = dict()
 

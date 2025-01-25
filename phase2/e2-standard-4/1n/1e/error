@@ -1,0 +1,1 @@
+│ Error: Error creating Dataproc cluster: googleapi: Error 400: Worker configuration must contain two or more workers: '1', badRequest
