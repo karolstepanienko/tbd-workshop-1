@@ -1,19 +1,21 @@
 locals {
-  main_subnet_address     = "10.10.10.0/24"
-  notebook_vpc_name       = "main-vpc"
-  notebook_subnet_name    = "subnet-01"
-  notebook_subnet_id      = "${var.region}/${local.notebook_subnet_name}"
-  composer_subnet_address = "10.11.0.0/16"
-  composer_work_namespace = "composer-user-workloads"
-  code_bucket_name        = "${var.project_name}-code"
-  data_bucket_name        = "${var.project_name}-data"
-  spark_version           = "3.3.2"
-  spark_driver_port       = 30000
-  spark_blockmgr_port     = 30001
-  dbt_version             = "1.7.13"
-  dbt_spark_version       = "1.7.1"
-  dbt_git_repo            = "https://github.com/karolstepanienko/tbd-tpc-di.git"
-  dbt_git_repo_branch     = "main"
+  main_subnet_address  = "10.10.10.0/24"
+  notebook_vpc_name    = "main-vpc"
+  notebook_subnet_name = "subnet-01"
+  notebook_subnet_id   = "${var.region}/${local.notebook_subnet_name}"
+  # composer_subnet_address = "10.11.0.0/16"
+  # composer_work_namespace = "composer-user-workloads"
+  code_bucket_name = "${var.project_name}-code"
+  data_bucket_name = "${var.project_name}-data"
+  spark_version    = "3.3.2"
+  # spark_driver_port       = 30000
+  # spark_blockmgr_port     = 30001
+  dbt_version       = "1.7.13"
+  dbt_spark_version = "1.7.1"
+  # dbt_git_repo            = "https://github.com/karolstepanienko/tbd-tpc-di.git"
+  # dbt_git_repo_branch     = "main"
+
+  composer_account_id = "${var.project_name}-data"
 }
 
 module "vpc" {
@@ -81,32 +83,37 @@ module "dataproc" {
 #  network        = module.vpc.network.network_id
 #}
 
-module "composer" {
-  depends_on     = [module.vpc]
-  source         = "./modules/composer"
-  project_name   = var.project_name
-  network        = module.vpc.network.network_name
-  subnet_address = local.composer_subnet_address
-  env_variables = {
-    "AIRFLOW_VAR_PROJECT_ID" : var.project_name,
-    "AIRFLOW_VAR_REGION_NAME" : var.region,
-    "AIRFLOW_VAR_BUCKET_NAME" : local.code_bucket_name
-    "AIRFLOW_VAR_PHS_CLUSTER" : module.dataproc.dataproc_cluster_name,
-    "AIRFLOW_VAR_WRK_NAMESPACE" : local.composer_work_namespace,
-    "AIRFLOW_VAR_DBT_GIT_REPO" : local.dbt_git_repo,
-    "AIRFLOW_VAR_DBT_GIT_REPO_BRANCH" : local.dbt_git_repo_branch
-  }
-}
+# module "composer" {
+#   depends_on     = [module.vpc]
+#   source         = "./modules/composer"
+#   project_name   = var.project_name
+#   network        = module.vpc.network.network_name
+#   subnet_address = local.composer_subnet_address
+#   env_variables = {
+#     "AIRFLOW_VAR_PROJECT_ID" : var.project_name,
+#     "AIRFLOW_VAR_REGION_NAME" : var.region,
+#     "AIRFLOW_VAR_BUCKET_NAME" : local.code_bucket_name
+#     "AIRFLOW_VAR_PHS_CLUSTER" : module.dataproc.dataproc_cluster_name,
+#     "AIRFLOW_VAR_WRK_NAMESPACE" : local.composer_work_namespace,
+#     "AIRFLOW_VAR_DBT_GIT_REPO" : local.dbt_git_repo,
+#     "AIRFLOW_VAR_DBT_GIT_REPO_BRANCH" : local.dbt_git_repo_branch
+#   }
+# }
 
-module "dbt_docker_image" {
-  depends_on         = [module.composer, module.gcr]
-  source             = "./modules/dbt_docker_image"
-  registry_hostname  = module.gcr.registry_hostname
-  registry_repo_name = coalesce(var.project_name)
-  project_name       = var.project_name
-  spark_version      = local.spark_version
-  dbt_version        = local.dbt_version
-  dbt_spark_version  = local.dbt_spark_version
+# module "dbt_docker_image" {
+#   depends_on         = [module.composer, module.gcr]
+#   source             = "./modules/dbt_docker_image"
+#   registry_hostname  = module.gcr.registry_hostname
+#   registry_repo_name = coalesce(var.project_name)
+#   project_name       = var.project_name
+#   spark_version      = local.spark_version
+#   dbt_version        = local.dbt_version
+#   dbt_spark_version  = local.dbt_spark_version
+# }
+
+resource "google_service_account" "tbd-composer-sa" {
+  project    = var.project_name
+  account_id = local.composer_account_id
 }
 
 module "data-pipelines" {
@@ -114,43 +121,43 @@ module "data-pipelines" {
   project_name         = var.project_name
   region               = var.region
   bucket_name          = local.code_bucket_name
-  data_service_account = module.composer.data_service_account
-  dag_bucket_name      = module.composer.gcs_bucket
+  data_service_account = google_service_account.tbd-composer-sa.email
+  dag_bucket_name      = local.data_bucket_name
   data_bucket_name     = local.data_bucket_name
 }
 
-resource "kubernetes_service" "dbt-task-service" {
-  metadata {
-    name      = "dbt-task-service"
-    namespace = local.composer_work_namespace
-    labels = {
-      app = "dbt-app"
-    }
-  }
+# resource "kubernetes_service" "dbt-task-service" {
+#   metadata {
+#     name      = "dbt-task-service"
+#     namespace = local.composer_work_namespace
+#     labels = {
+#       app = "dbt-app"
+#     }
+#   }
 
-  spec {
-    type = "NodePort"
-    selector = {
-      app = "dbt-app"
-    }
-    port {
-      name        = "spark-driver"
-      protocol    = "TCP"
-      port        = local.spark_driver_port
-      target_port = local.spark_driver_port
-      node_port   = local.spark_driver_port
+#   spec {
+#     type = "NodePort"
+#     selector = {
+#       app = "dbt-app"
+#     }
+#     port {
+#       name        = "spark-driver"
+#       protocol    = "TCP"
+#       port        = local.spark_driver_port
+#       target_port = local.spark_driver_port
+#       node_port   = local.spark_driver_port
 
-    }
-    port {
-      name        = "spark-block-mgr"
-      protocol    = "TCP"
-      port        = local.spark_blockmgr_port
-      target_port = local.spark_blockmgr_port
-      node_port   = local.spark_blockmgr_port
-    }
+#     }
+#     port {
+#       name        = "spark-block-mgr"
+#       protocol    = "TCP"
+#       port        = local.spark_blockmgr_port
+#       target_port = local.spark_blockmgr_port
+#       node_port   = local.spark_blockmgr_port
+#     }
 
-  }
-}
+#   }
+# }
 
 resource "google_compute_firewall" "allow-all-internal" {
   name    = "allow-all-internal"
