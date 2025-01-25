@@ -63,14 +63,20 @@ def save_dicts_to_csv(dict_2n_e1, dict_2n_e2, dict_2n_e5, dict_5n_e5):
 def print_markdown_table(dict_2n_e1, dict_2n_e2, dict_2n_e5, dict_5n_e5):
     assert(dict_2n_e1.keys() == dict_2n_e2.keys() == dict_2n_e5.keys() == dict_5n_e5.keys())
 
-    table_string =  "| db.table | 2n_e1 | 2n_e2 | 2n_e5 | 5n_e5 |\n"
+    table_string =  "| model | 2n_e1 | 2n_e2 | 2n_e5 | 5n_e5 |\n"
     table_string += "| -------- | ----- | ----- | ----- | ----- |\n"
     for key in dict_2n_e1.keys():
-        table_string += key + " | " \
+        table_string += "| " + key + " | " \
             + str(dict_2n_e1[key]) + " | " \
             + str(dict_2n_e2[key]) + " | " \
             + str(dict_2n_e5[key]) + " | " \
             + str(dict_5n_e5[key]) + " |\n"
+    
+    table_string += "| total time | " \
+        + str(get_sum_run_time(dict_2n_e1)) + " | " \
+        + str(get_sum_run_time(dict_2n_e2)) + " | " \
+        + str(get_sum_run_time(dict_2n_e5)) + " | " \
+        + str(get_sum_run_time(dict_5n_e5)) + " |\n"
     print(table_string)
 
 def print_times(path):
@@ -104,9 +110,9 @@ def plot_times(dict_2n_e1, dict_2n_e2, dict_2n_e5):
     br2 = [x + bar_height for x in br1]
     br3 = [x + bar_height for x in br2]
 
-    ax.barh(br1, dict_2n_e1.values(), color ='r', height=bar_height, edgecolor ='grey', label ='2n_e1')
+    ax.barh(br1, dict_2n_e5.values(), color ='b', height=bar_height, edgecolor ='grey', label ='2n_e1')
     ax.barh(br2, dict_2n_e2.values(), color ='g', height=bar_height, edgecolor ='grey', label ='2n_e2')
-    ax.barh(br3, dict_2n_e5.values(), color ='b', height=bar_height, edgecolor ='grey', label ='2n_e5')
+    ax.barh(br3, dict_2n_e1.values(), color ='r', height=bar_height, edgecolor ='grey', label ='2n_e5')
 
     ax.set_xlabel('Time [s]')
     ax.set_yticks([r + bar_height for r in range(len(dict_2n_e1.keys()))], dict_2n_e1.keys())
@@ -155,10 +161,10 @@ def plot_times_with_nodes(dict_2n_e1, dict_2n_e2, dict_2n_e5, dict_5n_e5):
     br3 = [x + bar_height for x in br2]
     br4 = [x + bar_height for x in br3]
 
-    ax.barh(br1, dict_2n_e1.values(), color ='r', height=bar_height, edgecolor ='grey', label ='2n_e1')
-    ax.barh(br2, dict_2n_e2.values(), color ='g', height=bar_height, edgecolor ='grey', label ='2n_e2')
-    ax.barh(br3, dict_2n_e5.values(), color ='b', height=bar_height, edgecolor ='grey', label ='2n_e5')
-    ax.barh(br4, dict_5n_e5.values(), color ='black', height=bar_height, edgecolor ='grey', label ='5n_e5')
+    ax.barh(br1, dict_5n_e5.values(), color ='black', height=bar_height, edgecolor ='grey', label ='2n_e1')
+    ax.barh(br2, dict_2n_e5.values(), color ='b', height=bar_height, edgecolor ='grey', label ='2n_e2')
+    ax.barh(br3, dict_2n_e2.values(), color ='g', height=bar_height, edgecolor ='grey', label ='2n_e5')
+    ax.barh(br4, dict_2n_e1.values(), color ='r', height=bar_height, edgecolor ='grey', label ='5n_e5')
 
     ax.set_xlabel('Time [s]')
     ax.set_yticks([r + bar_height for r in range(len(dict_2n_e1.keys()))], dict_2n_e1.keys())
