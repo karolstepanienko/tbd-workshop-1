@@ -18,6 +18,10 @@ and substitute "e2-standard-2" with "e2-standard-4".
   DONE in:
   [d6fa720](https://github.com/karolstepanienko/tbd-workshop-1/commit/d6fa720c4a2fd6991b32c6f338b775a7d031099f)
 
+  For this test Composer is not necessary. In order to save costs it was removed from terraform configuration.
+
+  TODO commit
+
 2. If needed request to increase cpu quotas (e.g. to 30 CPUs): 
 https://console.cloud.google.com/apis/api/compute.googleapis.com/quotas?project=tbd-2023z-9918
 
@@ -32,6 +36,13 @@ https://console.cloud.google.com/apis/api/compute.googleapis.com/quotas?project=
 ```
 
 in profiles.yml.
+
+
+  DONE comments:
+
+  'Load staging' phase has to be performed before each test, otherwise dbt run will fail.
+
+  This step calls only for changing the number of spark executor instances, but much better results can be achieved if the number of dataproc worker nodes is also increased alongside the number of spark executors. Because of this one additional test was performed with 5 dataproc worker nodes and a matching amount of spark executor instances.
 
 4. In the notebook, collect console output from dbt run, then parse it and retrieve total execution time and execution times of processing each model. Save the results from each number of executors.
 
