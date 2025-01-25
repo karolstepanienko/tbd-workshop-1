@@ -21,7 +21,8 @@ and substitute "e2-standard-2" with "e2-standard-4".
 
   For this test Composer is not necessary. In order to save costs it was removed from terraform configuration.
 
-  TODO commit
+  DONE in:
+  [9f7e550](https://github.com/karolstepanienko/tbd-workshop-1/commit/9f7e550e030a9456a8a7e8954dcfce620d8bb4ff)
 
 
 2. If needed request to increase cpu quotas (e.g. to 30 CPUs): 
@@ -109,7 +110,7 @@ DONE test results in a table:
 
   In order to check if further performance increase is possible (if the task can be successfully divided into smaller calculations) another test with 5 worker nodes in dataproc cluster and 5 Spark executors with a higher memory constraint ("spark.executor.memory": "12g") was performed. This test was a success from the processing time perspective because it achieved 67.46% (~26min) faster execution than the two node test (~80min).
 
-  According to ![cloudprice.net](https://cloudprice.net/gcp/compute?_ProcessorVCPUCount_min=2&sortField=PricePerHour&sortOrder=true&_MemorySizeInMB_max=16&_MemorySizeInMB_min=8) hourly cost of a e2-standard-4 VM is around 0.1474 USD. That means running 2 VMs for this calculation generated costs: 2 * 0.1474 * 80/60 ~= 0.393 USD, while running 5 VMs generated costs: 5 * 0.1474 * 26/60 ~= 0.32 USD. This shows that running more VMs turned out to be CHEAPER in the end. Assumption is necessary that calculations are sufficiently long where creation and destruction of terraform resources will generate negligible costs. Approach with more VMs also saves dev man-hour time which is also usually expensive.
+  According to [cloudprice.net](https://cloudprice.net/gcp/compute?_ProcessorVCPUCount_min=2&sortField=PricePerHour&sortOrder=true&_MemorySizeInMB_max=16&_MemorySizeInMB_min=8) hourly cost of a e2-standard-4 VM is around 0.1474 USD. That means running 2 VMs for this calculation generated costs: 2 * 0.1474 * 80/60 ~= 0.393 USD, while running 5 VMs generated costs: 5 * 0.1474 * 26/60 ~= 0.32 USD. This shows that running more VMs turned out to be CHEAPER in the end. Assumption is necessary that calculations are sufficiently long where creation and destruction of terraform resources will generate negligible costs. Approach with more VMs also saves dev man-hour time which is also usually expensive.
 
   ![all_dbt_run_times.png](doc/figures/phase2/all_dbt_run_times.png)
 
