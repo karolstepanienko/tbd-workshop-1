@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
 TPC_DI_NOTEBOOK_PATH_2n_1e = './e2-standard-4/2n/1e/tpc-di-setup.ipynb'
+TPC_DI_NOTEBOOK_PATH_2n_2e = './e2-standard-4/2n/2e/tpc-di-setup.ipynb'
 
-TPC_DI_NOTEBOOK_PATH_2n_2e = './e2-standard-4/2n/1e/tpc-di-setup.ipynb'
-TPC_DI_NOTEBOOK_PATH_2n_5e = './e2-standard-4/2n/1e/tpc-di-setup.ipynb'
 # TODO switch when tests ready
-# TPC_DI_NOTEBOOK_PATH_2n_2e = './e2-standard-4/2n/2e/tpc-di-setup.ipynb'
+TPC_DI_NOTEBOOK_PATH_2n_5e = './e2-standard-4/2n/1e/tpc-di-setup.ipynb'
 # TPC_DI_NOTEBOOK_PATH_2n_5e = './e2-standard-4/2n/5e/tpc-di-setup.ipynb'
 
 TPC_DI_NOTEBOOK_PATH_5n_5e = './e2-standard-4/5n/5e/tpc-di-setup.ipynb'
